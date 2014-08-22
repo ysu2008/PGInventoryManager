@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+<head>
+  <!--<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />-->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+  <body>
+    <table class="table table-bordered">
+      <tr>
+	<td>Quantity</td>
+	<td>UPC Code</td>
+	<td>Pack Size</td>
+	<td></td>
+      </tr>
+      {% for upc in upcs %}
+      <tr>
+	<form action="/update" method="post">
+	  <td><input name="quantity" type="text" value="{{ upc.quantity }}" /><input name="upc" value="{{ upc.upc_code }}" type="hidden" /></td>
+	  <td>{{ upc.upc_code }}</td>
+	  <td><input name="pack_size" type="text" value="{{ upc.pack_size }}" /></td>
+	  <td><input type="submit" value="update"></td>
+	</form>
+	<form action="/delete" method="post">
+	  <td><input type="submit" value="delete"><input name="upc" value="{{ upc.upc_code }}" type="hidden" /></td>
+	</form>
+      </tr>
+      {% endfor %}
+    </table>
+    <form action="/scan?database_name={{ database_name }}" method="post">
+      <div><textarea name="content" rows="6" cols="100"></textarea></div>
+      <div><input type="submit" value="Scan UPC"></div>
+    </form>
+    <form action="/bulk_add" method="post">
+      <div><textarea name="content" rows="6" cols="100"></textarea></div>
+      <div><input type="submit" value="Input UPC"></div>
+    </form>
+
+    <hr>
+
+    <form>Database name:
+      <input value="{{ database_name }}" name="database_name">
+      <input type="submit" value="switch">
+    </form>
+
+    <a href="{{ url|safe }}">{{ url_linktext }}</a>
+
+  </body>
+</html>
+{% endautoescape %}
