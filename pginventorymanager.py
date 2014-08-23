@@ -92,15 +92,15 @@ class BulkAdd(webapp2.RequestHandler):
         upcs = content_string.split("\r\n")
         for upc_string in upcs:
             data_list = upc_string.split(",")
-            if len(data_list) == 4:
+            if len(data_list) == 6:
                 upc = UPC(parent=database_key(database_name))
-                upc.upc_code = data_list[0]
-                upc.pack_size = 10
-                upc.estimated_consumption = 10
-                upc.quantity = int(math.ceil(float(upc.estimated_consumption)/float(upc.pack_size)))
-                upc.vendor = data_list[3]
-                upc.name = data_list[1]
-                upc.image_url = data_list[2]
+                upc.quantity = int(data_list[0])
+                upc.pack_size = int(data_list[1])
+                upc.upc_code = data_list[2]
+                upc.estimated_consumption = upc.pack_size * upc.quantity
+                upc.name = data_list[3]
+                upc.image_url = data_list[4]
+                upc.vendor = data_list[5]
                 upc.put()
         self.redirect('/')
 
