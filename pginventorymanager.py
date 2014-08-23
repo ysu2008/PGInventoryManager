@@ -31,6 +31,7 @@ class UPC(ndb.Model):
     name = ndb.StringProperty()
     image_url = ndb.StringProperty()
     estimated_consumption = ndb.IntegerProperty()
+    
 
 class MainPage(webapp2.RequestHandler):
 

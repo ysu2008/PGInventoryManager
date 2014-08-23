@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<style>
+
+@font-face {
+font-family: UPC;
+src: url("Code39Azalea.otf") format("truetype");
+}
+
+h1 {
+font-family: UPC, Helvetica, Verdana, Sans-Serif;
+}
+
+@font-face {
+font-family: RustikWeb;
+src: url("rustik.otf") format("opentype");
+}
+
+h2 {
+font-family: RustikWeb, Helvetica, Verdana, Sans-Serif;
+}
+
+
+textarea {
+  white-space: pre;
+  word-wrap: normal;
+  overflow-x: scroll;
+}
+
+</style>
+    <script type="text/javascript">
+	
+                function addtext(what){
+if (document.createTextNode){
+var d1 = document.getElementById('myDiv');
+d1.insertAdjacentHTML('beforeend', what);
+}
+}
+
+	
+	function calculate(){
+	    /*var NumberSystem = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+	    var ManufacturerID = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+	    var ProductCode = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+	    var CheckDigit = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];*/
+
+	    var DesiredUPC=document.getElementById('ph').value;
+	    var UPCstring=DesiredUPC.toString();
+	    var ttfUPC = new Array(UPCstring.length);
+	    var DesiredPic=document.getElementById('pic').value;
+	    var DesiredName=document.getElementById('itemName').value + ' ' + document.getElementById('ph').value;
+
+	 /*   ttfUPC[0]="*";
+	    for(var x=0; x<UPCstring.length; x++){
+		ttfUPC[x+1] = NumberSystem[Number(UPCstring[x])];
+	      //  alert('ttf:'+ttfUPC + ' numsys[x]'+NumberSystem[5+Number(UPCstring[x])]+' ttf[x]:'+ttfUPC[x]);
+	    }
+	    ttfUPC[UPCstring.length+1]='*';*/
+	    
+	    ttfUPC='*'+DesiredUPC+'*';
+	    
+
+	  /*  document.getElementById('upcout').value =ph;
+	    var elem = document.getElementById("upcout");
+	    elem.style.fontFamily="upc";
+	    elem.textContent = ttfUPC;
+	    document.getElementById('upcPic').src =DesiredPic;
+	    document.getElementById('itemNameOut').textContent =DesiredName;
+          */
+             makeUPC(DesiredName, DesiredUPC, DesiredPic );
+          
+	}
+       
+       	function makeUPC(DesiredName, DesiredUPC, DesiredPic ){
+	    var UPCstring=DesiredUPC.toString();
+	    var ttfUPC = new Array(UPCstring.length);
+	    var DesiredLongName=DesiredName + '  (' + DesiredUPC +')';
+
+	 /*   ttfUPC[0]="*";
+	    for(var x=0; x<UPCstring.length; x++){
+		ttfUPC[x+1] = NumberSystem[Number(UPCstring[x])];
+	      //  alert('ttf:'+ttfUPC + ' numsys[x]'+NumberSystem[5+Number(UPCstring[x])]+' ttf[x]:'+ttfUPC[x]);
+	    }
+	    ttfUPC[UPCstring.length+1]='*';*/
+	    
+	    ttfUPC='*'+DesiredUPC+'*';
+	    
+
+	   // document.getElementById('upcout').value =ph;
+	    var elem = document.getElementById("upcout");
+	    elem.style.fontFamily="upc";
+	    elem.textContent = ttfUPC;
+	    document.getElementById('upcPic').src =DesiredPic;
+	    document.getElementById('itemNameOut').textContent =DesiredLongName;
+            
+  var textOutput='<br><img src="' + DesiredPic + '" height="60">&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:24pt;font-family:UPC" id=upcout>' + ttfUPC + '</span><br><h3><span id=itemNameOut><div style="width:200px"> ' + DesiredLongName + '</div></span></h3><br>';
+            addtext(textOutput);
+	    
+	}
+        
+       
+        
+/*	
+        
+function actOnEachLine(textarea, func) {
+    var lines = textarea.value.replace(/\r\n/g, "\n").split("\n");
+    var newLines, newValue, i;
+
+    // Use the map() method of Array where available 
+    if (typeof lines.map != "undefined") {
+        newLines = lines.map(func);
+    } else {
+        newLines = [];
+        i = lines.length;
+        while (i--) {
+            newLines[i] = func(lines[i]);
+        }
+    }
+    textarea.value = newLines.join("\r\n");
+}*/
+/*
+var textarea = document.getElementById("your_textarea");
+actOnEachLine(textarea, function(line) {
+    return "[START]" + line + "[END]";
+};*/
+
+function bulkCalculate(){
+var names = document.getElementById("itemNameArea");
+var upcs = document.getElementById("upcArea");
+var pics = document.getElementById("picArea");
+var nameArray = names.value.split("\n");
+var upcArray = upcs.value.split("\n");
+var picArray = pics.value.split("\n");
+
+for(var i = 0;i < nameArray.length;i++){
+makeUPC(nameArray[i], upcArray[i], picArray[i])
+}
+
+}
+
+        
+        
+  function clearContents(element) {
+    element.value = '';
+    }
+	
+    </script>
+	    
+</head>
+    <body>
+	
+<h1>test *1234*</h1>
+
+    Name: <input type="textbox" name="itemName" id="itemName"><br>    
+    Desired UPC: <input type="textbox" name="ph" id="ph"><br>
+    Image URL: <input type="textbox" name="pic" id="pic"><br>
+    <button onclick="calculate()">Make Single UPC</button>
+<p></p>
+
+<p></p>
+
+<p>
+<img id=upcPic src="http://thumbs.dreamstime.com/z/emoticon-smiley-face-6800093.jpg" alt="Smiley face" height="60" width="60">
+&nbsp; &nbsp; &nbsp; &nbsp;    
+<span style="font-size:24pt" id=upcout>output</span>
+</p>
+<h3><span id=itemNameOut>name goes here</span></h3>
+
+Name | Desired UPC | Image URL<BR>
+    <textarea name="itemNameArea" id="itemNameArea" cols="50" rows="10" onfocus="clearContents(this);">Names</textarea>
+     <textarea name="upcArea" id="upcArea" cols="50" rows="10" onfocus="clearContents(this);">UPCs</textarea>
+    <textarea name="picArea" id="picArea" cols="50" rows="10" onfocus="clearContents(this);">Image URLs</textarea><br>
+    <button onclick="bulkCalculate()">Make Bulk UPC</button>
+<p></p>
+
+<p></p>
+
+<p>
+<img id=upcPic src="http://thumbs.dreamstime.com/z/emoticon-smiley-face-6800093.jpg" alt="Smiley face" height="60" width="60">
+&nbsp; &nbsp; &nbsp; &nbsp;    
+<span style="font-size:24pt" id=upcout>output</span>
+</p>
+<h3><span id=itemNameOut>name goes here</span></h3>
+
+
+
+<div id=myDiv></div>
+
+<script>
+function myFunction() {
+    alert("I am an alert box!");
+}
+</script>
+	
+    </body>
+</html>
