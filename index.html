@@ -10,6 +10,7 @@
       <tr>
 	<td>Quantity</td>
 	<td>UPC Code</td>
+	<td>Vendor</td>
 	<td>Name</td>
 	<td>Picture</td>
 	<td>Pack Size</td>
@@ -19,6 +20,7 @@
 	<form action="/update" method="post">
 	  <td><input name="quantity" type="text" value="{{ upc.quantity }}" /><input name="upc" value="{{ upc.upc_code }}" type="hidden" /></td>
 	  <td>{{ upc.upc_code }}</td>
+	  <td>{{ upc.vendor }}</td>
 	  <td>{{ upc.name }}</td>
 	  <td><img src="{{ upc.image_url }}" alt="{{ upc.name }}" height="60" width="auto"/></td>
 	  <td><input name="pack_size" type="text" value="{{ upc.pack_size }}" /></td>

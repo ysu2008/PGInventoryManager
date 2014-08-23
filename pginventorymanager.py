@@ -31,7 +31,7 @@ class UPC(ndb.Model):
     name = ndb.StringProperty()
     image_url = ndb.StringProperty()
     estimated_consumption = ndb.IntegerProperty()
-    
+    vendor = ndb.StringProperty()
 
 class MainPage(webapp2.RequestHandler):
 
@@ -39,7 +39,7 @@ class MainPage(webapp2.RequestHandler):
         database_name = self.request.get('database_name',
                                           DEFAULT_DATABASE_NAME)
         upcs_query = UPC.query(
-            ancestor=database_key(database_name)).order(UPC.name)
+            ancestor=database_key(database_name)).order(UPC.vendor, UPC.name)
         upcs = upcs_query.fetch(None)
 
         if users.get_current_user():
@@ -92,12 +92,13 @@ class BulkAdd(webapp2.RequestHandler):
         upcs = content_string.split("\r\n")
         for upc_string in upcs:
             data_list = upc_string.split(",")
-            if len(data_list) == 3:
+            if len(data_list) == 4:
                 upc = UPC(parent=database_key(database_name))
                 upc.upc_code = data_list[0]
                 upc.pack_size = 10
                 upc.estimated_consumption = 10
                 upc.quantity = int(math.ceil(float(upc.estimated_consumption)/float(upc.pack_size)))
+                upc.vendor = data_list[3]
                 upc.name = data_list[1]
                 upc.image_url = data_list[2]
                 upc.put()

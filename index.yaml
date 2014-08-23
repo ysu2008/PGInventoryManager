@@ -32,3 +32,9 @@ indexes:
   properties:
   - name: upc_code
     direction: desc
+
+- kind: UPC
+  ancestor: yes
+  properties:
+  - name: vendor
+  - name: name
